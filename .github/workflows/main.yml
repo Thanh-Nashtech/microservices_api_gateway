@@ -33,12 +33,11 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            docker network create microservices_api_gateway_network
             docker rm --force microservices_api_gateway
             docker pull thanhphan1098/microservices_api_gateway:latest
             docker run -d -p 3000:3000 \
-            -e AUTHOR=${{ secrets.AUTHOR }} \
-            -e NATS_SERVER_URL=${{ secrets.NATS_SERVER_URL }} \
-            -e NATS_TOKEN=${{ secrets.NATS_TOKEN }} \
+            -e AUTHOR="${{ secrets.AUTHOR }}" \
+            -e NATS_SERVER_URL="${{ secrets.NATS_SERVER_URL }}" \
+            -e NATS_TOKEN="${{ secrets.NATS_TOKEN }}" \
             --name microservices_api_gateway thanhphan1098/microservices_api_gateway:latest
             docker system prune -f
