@@ -40,7 +40,5 @@ jobs:
             -e AUTHOR=${{ secrets.AUTHOR }} \
             -e NATS_SERVER_URL=${{ secrets.NATS_SERVER_URL }} \
             -e NATS_TOKEN=${{ secrets.NATS_TOKEN }} \
-           
-            --network=microservices_api_gateway_network \
             --name microservices_api_gateway thanhphan1098/microservices_api_gateway:latest
             docker system prune -f
