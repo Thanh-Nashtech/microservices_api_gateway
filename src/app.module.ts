@@ -8,7 +8,6 @@ import { PermissionModule } from './modules/permission/permission.module';
 import { RoleModule } from './modules/role/role.module';
 import { ProductModule } from './modules/product/product.module';
 
-
 @Module({
   imports: [
     UserModule,

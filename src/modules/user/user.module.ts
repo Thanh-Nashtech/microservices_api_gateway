@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+require('dotenv').config();
 
 @Module({
   imports: [
@@ -9,17 +10,17 @@ import { UserService } from './user.service';
       {
         name: 'USER_SERVICE',
         transport: Transport.NATS,
-        options: { 
-          servers: ['nats://localhost:4222'],
-          token: 's3cr3t'
+        options: {
+          servers: [process.env.NATS_SERVER_URL],
+          token: process.env.NATS_TOKEN
         },
       },
       {
         name: 'AUTH_SERVICE',
         transport: Transport.NATS,
         options: {
-          servers: ['nats://localhost:4222'],
-          token: 's3cr3t'
+          servers: [process.env.NATS_SERVER_URL],
+          token: process.env.NATS_TOKEN
         },
       },
     ]),
