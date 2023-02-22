@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: thanhphan1098/my_cicd:latest
+          tags: thanhphan1098/microservices_api_gateway:latest
           secrets: |
             "AUTHOR=${{ secrets.AUTHOR }}"
       - 
@@ -33,30 +33,14 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            docker network create my_cicd_network
-            docker rm --force my_cicd
-            docker pull thanhphan1098/my_cicd:latest
-            docker run -d -p 80:3001 \
+            docker network create microservices_api_gateway_network
+            docker rm --force microservices_api_gateway
+            docker pull thanhphan1098/microservices_api_gateway:latest
+            docker run -d -p 3000:3000 \
             -e AUTHOR=${{ secrets.AUTHOR }} \
-            -e SENDGRID_APIKEY=${{ secrets.SENDGRID_APIKEY }} \
-            -e AUTH_SALT=${{ secrets.AUTH_SALT }} \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            -e JWT_EXPIRE_IN=${{ secrets.JWT_EXPIRE_IN }} \
-            -e EMAIL_USER=${{ secrets.EMAIL_USER }} \
-            -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} \
-            -e EMAIL_SEND_FROM=${{ secrets.EMAIL_SEND_FROM }} \
-            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            -e AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }} \
-            -e AWS_REGION=${{ secrets.AWS_REGION }} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e AWS_SIGNED_URL_EXPIRED_IN_SECOND=${{ secrets.AWS_SIGNED_URL_EXPIRED_IN_SECOND }} \
-            -e WORLD_CUP_FREE_API_EMAIL=${{ secrets.WORLD_CUP_FREE_API_EMAIL }} \
-            -e WORLD_CUP_FREE_API_PASSWORD=${{ secrets.WORLD_CUP_FREE_API_PASSWORD }} \
-            --network=my_cicd_network \
-            --name my_cicd thanhphan1098/my_cicd:latest
+            -e NATS_SERVER_URL=${{ secrets.NATS_SERVER_URL }} \
+            -e NATS_TOKEN=${{ secrets.NATS_TOKEN }} \
+           
+            --network=microservices_api_gateway_network \
+            --name microservices_api_gateway thanhphan1098/microservices_api_gateway:latest
             docker system prune -f
