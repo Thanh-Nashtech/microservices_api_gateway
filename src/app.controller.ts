@@ -10,4 +10,9 @@ export class AppController {
   getHello() {
     return `Hello ${process.env.AUTHOR}`;
   }
+
+  @Get('test')
+  test() {
+    return this.appService.getTest()
+  }
 }
